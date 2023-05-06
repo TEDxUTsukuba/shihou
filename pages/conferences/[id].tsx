@@ -19,8 +19,6 @@ export default  function Index(props: { conference: GetOneConferenceQuery['confe
 
 export const getStaticProps : GetStaticProps = async ( context ) => {
   const { locale, params } = context
-  console.log(params)
-  console.log(locale)
   if(typeof params?.id !== 'string') {
     return { notFound: true}
   }

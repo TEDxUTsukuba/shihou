@@ -2,12 +2,8 @@ import { GraphQLClient } from "graphql-request";
 import { getSdk } from "@/graphql/generated/sdk";
 
 
-let token = process.env.DATOCMS_API_TOKEN
-if(process.env.NODE_ENV === 'development'){
-  token = process.env.NEXT_PUBLIC_DATOCMS_API_TOKEN
-}
 const headers = {
-  authorization: `Bearer ${token}`,
+  authorization: `Bearer ${process.env.DATOCMS_API_TOKEN}`,
 };
 /*
   if (includeDrafts) {
