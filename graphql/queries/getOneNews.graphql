@@ -1,0 +1,8 @@
+query getOneNews($id: ItemId, $locale: SiteLocale) {
+    notice(locale: $locale filter: { id: { eq: $id}}) {
+    title,
+    shortDescription,
+    longDescription,
+    image { url }
+    }
+}

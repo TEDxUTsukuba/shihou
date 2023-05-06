@@ -4019,6 +4019,18 @@ export type FocalPoint = {
   y: Scalars['FloatType'];
 };
 
+export type GetConferencesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetConferencesQuery = { __typename?: 'Query', allConferences: Array<{ __typename?: 'ConferenceRecord', name?: string | null, id: any }> };
+
+export type GetNewsQueryVariables = Exact<{
+  locale?: InputMaybe<SiteLocale>;
+}>;
+
+
+export type GetNewsQuery = { __typename?: 'Query', allNotices: Array<{ __typename?: 'NoticeRecord', id: any, title?: string | null, shortDescription?: string | null, image?: { __typename?: 'FileField', alt?: string | null, responsiveImage?: { __typename?: 'ResponsiveImage', sizes: string, src: string, width: any, height: any, alt?: string | null, title?: string | null, base64?: string | null } | null } | null }> };
+
 export type GetOneConferenceQueryVariables = Exact<{
   name?: InputMaybe<Scalars['String']>;
   locale?: InputMaybe<SiteLocale>;
@@ -4027,7 +4039,58 @@ export type GetOneConferenceQueryVariables = Exact<{
 
 export type GetOneConferenceQuery = { __typename?: 'Query', conference?: { __typename?: 'ConferenceRecord', name?: string | null, themeStatement?: string | null, speakers: Array<{ __typename?: 'SpeakerRecord', lastName?: string | null }> } | null };
 
+export type GetOneNewsQueryVariables = Exact<{
+  id?: InputMaybe<Scalars['ItemId']>;
+  locale?: InputMaybe<SiteLocale>;
+}>;
 
+
+export type GetOneNewsQuery = { __typename?: 'Query', notice?: { __typename?: 'NoticeRecord', title?: string | null, shortDescription?: string | null, longDescription?: string | null, image?: { __typename?: 'FileField', url: string } | null } | null };
+
+export type GetPartnersQueryVariables = Exact<{
+  locale?: InputMaybe<SiteLocale>;
+}>;
+
+
+export type GetPartnersQuery = { __typename?: 'Query', allPartners: Array<{ __typename?: 'PartnerRecord', id: any, name?: string | null, tier?: string | null, url?: string | null, logo?: { __typename?: 'FileField', alt?: string | null, responsiveImage?: { __typename?: 'ResponsiveImage', sizes: string, src: string, width: any, height: any, alt?: string | null, title?: string | null, base64?: string | null } | null } | null }> };
+
+export type GetTalksQueryVariables = Exact<{
+  locale?: InputMaybe<SiteLocale>;
+}>;
+
+
+export type GetTalksQuery = { __typename?: 'Query', allSpeakers: Array<{ __typename?: 'SpeakerRecord', firstName?: string | null, middleName?: string | null, lastName?: string | null, talkTitle?: string | null, description?: string | null, youtubeId?: string | null, eventName?: { __typename?: 'ConferenceRecord', name?: string | null } | null }> };
+
+
+export const GetConferencesDocument = gql`
+    query getConferences {
+  allConferences {
+    name
+    id
+  }
+}
+    `;
+export const GetNewsDocument = gql`
+    query getNews($locale: SiteLocale) {
+  allNotices(locale: $locale) {
+    id
+    title
+    shortDescription
+    image {
+      alt
+      responsiveImage(imgixParams: {w: 100, h: 100, fit: scale}) {
+        sizes
+        src
+        width
+        height
+        alt
+        title
+        base64
+      }
+    }
+  }
+}
+    `;
 export const GetOneConferenceDocument = gql`
     query getOneConference($name: String, $locale: SiteLocale) {
   conference(locale: $locale, filter: {name: {eq: $name}}) {
@@ -4039,6 +4102,55 @@ export const GetOneConferenceDocument = gql`
   }
 }
     `;
+export const GetOneNewsDocument = gql`
+    query getOneNews($id: ItemId, $locale: SiteLocale) {
+  notice(locale: $locale, filter: {id: {eq: $id}}) {
+    title
+    shortDescription
+    longDescription
+    image {
+      url
+    }
+  }
+}
+    `;
+export const GetPartnersDocument = gql`
+    query getPartners($locale: SiteLocale) {
+  allPartners(locale: $locale, filter: {currentlyPartnering: {eq: true}}) {
+    id
+    name
+    tier
+    url
+    logo {
+      alt
+      responsiveImage(imgixParams: {w: 100, h: 100}) {
+        sizes
+        src
+        width
+        height
+        alt
+        title
+        base64
+      }
+    }
+  }
+}
+    `;
+export const GetTalksDocument = gql`
+    query getTalks($locale: SiteLocale) {
+  allSpeakers(locale: $locale, orderBy: _createdAt_DESC) {
+    firstName
+    middleName
+    lastName
+    eventName {
+      name
+    }
+    talkTitle
+    description
+    youtubeId
+  }
+}
+    `;
 
 export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string) => Promise<T>;
 
@@ -4047,8 +4159,23 @@ const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationTy
 
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
+    getConferences(variables?: GetConferencesQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetConferencesQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetConferencesQuery>(GetConferencesDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getConferences', 'query');
+    },
+    getNews(variables?: GetNewsQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetNewsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetNewsQuery>(GetNewsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getNews', 'query');
+    },
     getOneConference(variables?: GetOneConferenceQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetOneConferenceQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetOneConferenceQuery>(GetOneConferenceDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getOneConference', 'query');
+    },
+    getOneNews(variables?: GetOneNewsQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetOneNewsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetOneNewsQuery>(GetOneNewsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getOneNews', 'query');
+    },
+    getPartners(variables?: GetPartnersQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetPartnersQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetPartnersQuery>(GetPartnersDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getPartners', 'query');
+    },
+    getTalks(variables?: GetTalksQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetTalksQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetTalksQuery>(GetTalksDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getTalks', 'query');
     }
   };
 }

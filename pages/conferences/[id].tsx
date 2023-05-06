@@ -32,6 +32,11 @@ export const getStaticProps : GetStaticProps = async ( context ) => {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const paths = [ { params: { id: '2022'}, locale: 'ja'}, { params: { id: '2022'}, locale: 'en'}]
+  const { allConferences } = await sdk.getConferences()
+  const paths : Array<{params: any, locale: 'ja' | 'en'}> = []
+  allConferences.forEach(conference => {
+    paths.push({ params: { id: conference.name}, locale: 'ja'})
+    paths.push({ params: { id: conference.name}, locale: 'en'})
+  })
   return { paths , fallback: false}
 }

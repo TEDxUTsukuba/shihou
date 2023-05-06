@@ -1,0 +1,13 @@
+query getTalks($locale: SiteLocale){
+    allSpeakers(locale: $locale, orderBy: _createdAt_DESC) {
+    firstName
+    middleName
+    lastName
+    eventName {
+        name
+    }
+    talkTitle
+    description
+    youtubeId
+    }
+}

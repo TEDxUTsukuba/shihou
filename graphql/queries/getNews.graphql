@@ -1,0 +1,19 @@
+query getNews( $locale: SiteLocale) {
+    allNotices(locale: $locale) {
+      id
+      title
+      shortDescription
+      image {
+        alt
+        responsiveImage( imgixParams: {w:100, h: 100, fit: scale}) {
+            sizes
+            src
+            width
+            height
+            alt
+            title
+            base64
+        }  
+      }
+    }
+}
