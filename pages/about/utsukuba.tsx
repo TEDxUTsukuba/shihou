@@ -1,4 +1,4 @@
-const Utsukuba = () => { 
-    return (<h1> UTsukuba about page</h1>)
-}
-export default Utsukuba
+const Utsukuba = () => {
+  return <h1> UTsukuba about page</h1>;
+};
+export default Utsukuba;

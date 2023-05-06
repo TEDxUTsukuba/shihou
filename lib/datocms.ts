@@ -1,7 +1,6 @@
 import { GraphQLClient } from "graphql-request";
 import { getSdk } from "@/graphql/generated/sdk";
 
-
 const headers = {
   authorization: `Bearer ${process.env.DATOCMS_API_TOKEN}`,
 };
@@ -14,5 +13,5 @@ const headers = {
   }
   */
 
-const client = new GraphQLClient('https://graphql.datocms.com', { headers });
+const client = new GraphQLClient("https://graphql.datocms.com", { headers });
 export const sdk = getSdk(client);
