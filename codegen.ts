@@ -23,9 +23,9 @@ const config: CodegenConfig = {
   },
   config: {
     namingConvention: {
-        enumValues: './graphql/pascalCaseWithUnderscores',
-      }
-  }
+      enumValues: "./graphql/pascalCaseWithUnderscores",
+    },
+  },
 };
 
 export default config;
