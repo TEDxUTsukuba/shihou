@@ -1,0 +1,9 @@
+query getOneConference($name: String, $locale: SiteLocale) {
+  conference(locale: $locale, filter: { name: { eq: $name } }) {
+    name
+    themeStatement
+    speakers {
+      lastName
+    }
+  }
+}

@@ -1,0 +1,20 @@
+query getPartners($locale: SiteLocale) {
+  allPartners(locale: $locale, filter: { currentlyPartnering: { eq: true } }) {
+    id
+    name
+    tier
+    url
+    logo {
+      alt
+      responsiveImage(imgixParams: { w: 100, h: 100 }) {
+        sizes
+        src
+        width
+        height
+        alt
+        title
+        base64
+      }
+    }
+  }
+}
